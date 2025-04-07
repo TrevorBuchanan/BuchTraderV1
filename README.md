@@ -1,10 +1,10 @@
-Buch Trader
+# Buch Trader
 
-# Notes:
+## Notes:
 * ...
 * ...
 
-# Other:
+## Other:
 * ...
 * ...
 
