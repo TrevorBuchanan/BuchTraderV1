@@ -1,10 +1,11 @@
-# Buch Trader
+# Buch Trader V1
 
-## Notes:
+## Notes
+
 * ...
 * ...
 
-## Commands:
+## Commands
+
 * `tree -I node_modules`: Prints tree without node_modules
 * ...
-
