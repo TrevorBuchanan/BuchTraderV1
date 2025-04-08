@@ -1,6 +1,12 @@
-import axios from 'axios';
+const axios = require('axios');
+
+require('dotenv').config();
 
 const USER_AGENT = process.env.USER_AGENT;
+
+if (!USER_AGENT) {
+  throw new Error("USER_AGENT environment variable is not set.");
+}
 
 const BASE_URL = 'https://api.exchange.coinbase.com';
 
@@ -40,4 +46,6 @@ const makeExchangeRequest = async (method, requestPath, params = null, data = nu
   }
 };
 
-export { makeExchangeRequest };
+module.exports = {
+  makeExchangeRequest
+}

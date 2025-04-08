@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public'))); // Serve static files if needed
 
 // Routes
-app.use('/', routes); 
+app.use('/api', routes); 
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
