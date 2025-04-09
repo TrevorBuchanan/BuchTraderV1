@@ -22,17 +22,12 @@ const getProductHistory = async (req, res) => {
 
         while (startTime < endTime) {
             // Update time parameters for the current batch
-            let batchEndTime = new Date(startTime + (granularity * MAX_FETCH * 1000));
+            let batchEndTime = new Date(startTime + (granularity * MAX_FETCH * 1000)).getTime();
         
             // Ensure batchEndTime doesn't go beyond the endTime
             if (batchEndTime > endTime) {
                 batchEndTime = endTime;
             }
-        
-            console.log("Start:")
-            console.log(startTime);
-            console.log("End:")
-            console.log(batchEndTime);
 
             const productHistory = await exchangeReqsService.getProductHistory(product, startTime, batchEndTime, granularity);
             
