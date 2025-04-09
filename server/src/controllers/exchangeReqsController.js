@@ -5,7 +5,7 @@ const getProductsList = async (req, res) => {
         const productsList = await exchangeReqsService.getProductsList();
         res.json(productsList);
     } catch (error) {
-        console.log("Exchange reqs controller level error");
+        console.error({ message: 'Error (controller) fetching product history', error: error.message })
         res.status(500).json({ message: 'Error (controller) fetching products list', error: error.message });
     }
 };
@@ -48,7 +48,7 @@ const getProductInfo = async (req, res) => {
         const productInfo = await exchangeReqsService.getProductInfo(product);
         res.json(productInfo);
     } catch (error) {
-        console.log("Exchange reqs controller level error");
+        console.error({ message: 'Error (controller) fetching product history', error: error.message })
         res.status(500).json({ message: 'Error (controller) fetching product info', error: error.message });
     }
 };

@@ -6,7 +6,6 @@ const getProductsList = async () => {
         const response = await exchangeReqs.makeExchangeRequest('GET', '/products');
         return response.data || response;
     } catch (error) {
-        console.log("Exchange reqs service level error");
         throw new Error(`Error (service) fetching products: ${error.message}`);
     }
 };
@@ -30,7 +29,6 @@ const getProductInfo = async (product) => {
         const response = await exchangeReqs.makeExchangeRequest('GET', `/products/${product}`);
         return response.data || response;
     } catch (error) {
-        console.log("Exchange reqs service level error");
         throw new Error(`Error (service) fetching product info: ${error.message}`);
     }
 };

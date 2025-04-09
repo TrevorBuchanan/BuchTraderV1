@@ -33,8 +33,29 @@ const getCoinbaseProductInfo = async (product) => {
     }
 };
 
+const makeEngineStep = async (product) => {
+    try {
+        const params = { 'product': product }
+        const response = await axios.post(`/api/engine/step`, { params });
+        return response.data;
+    } catch (error) {
+        console.error('Error making engine step:', error);
+    }
+}
+
+const getEngineStatus = async () => {
+    try {
+        const response = await axios.get(`/api/engine/status`);
+        return response.data;
+    } catch (error) {
+        console.error('Error getting engine status:', error);
+    }
+}
+
 export {
     getCoinbaseProductsList,
     getCoinbaseProductHistory,
     getCoinbaseProductInfo,
+    makeEngineStep,
+    getEngineStatus,
 }
