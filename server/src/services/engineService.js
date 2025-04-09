@@ -13,11 +13,11 @@ const makeStep = async (price) => {
 const getStatus = async () => {
     try {
         const status = {
-            'Price': engine.price,
-            'ProfitLoss': engine.getProfitLoss(),
-            'LongLossLimit': engine.getLongLossLimit(),
-            'ShortLossLimit': engine.getShortLossLimit(),
-            'Actions': engine.getActions()
+            'price': engine.getPrice(),
+            'profitLoss': engine.getProfitLoss(),
+            'longLossLimit': engine.getLongLossLimit(),
+            'shortLossLimit': engine.getShortLossLimit(),
+            'actions': engine.getActions()
         }
         return status;
     } catch (error) {

@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
-const ApexChart = () => {
+const SeriesChart = ({ newValues }) => {
   const [state, setState] = useState({
-    series: [{
-      data: []
-    }],
+    series: [],
     options: {
       chart: {
         id: 'realtime',
-        height: 700,
+        height: 350,
         type: 'line',
         animations: {
           enabled: true,
@@ -40,55 +38,57 @@ const ApexChart = () => {
       },
       xaxis: {
         type: 'datetime',
-        range: 10000, // example range for 10 seconds
-      },
-      yaxis: {
-        max: 100
+        range: 30000, // example range for 10 seconds
       },
       legend: {
-        show: false
+        show: true
       },
     }
   });
 
-  const getNewSeries = (lastDate, range) => {
-    const newDate = lastDate + range; // Update the time
-    const newData = {
-      x: newDate,
-      y: Math.random() * 100 // Random value for illustration
-    };
-    return newData;
-  };
-
   useEffect(() => {
-    let lastDate = new Date().getTime(); // Use let instead of const for lastDate
-    const intervalId = window.setInterval(() => {
-      const newSeriesData = getNewSeries(lastDate, 1000); // 1000 ms interval (1 second)
+    if (newValues && newValues.length > 0) {
+      const timestamp = new Date().getTime();
+
       setState(prevState => {
-        const newSeries = [...prevState.series[0].data, newSeriesData];
+        // Create a copy of the existing series
+        let updatedSeries = [...prevState.series];
+
+        // Loop through each name-value pair in newValues
+        newValues.forEach(({ name, value }) => {
+          // Find the existing series by name
+          const seriesIndex = updatedSeries.findIndex(series => series.name === name);
+
+          if (seriesIndex !== -1) {
+            // If the series exists, append the new value
+            updatedSeries[seriesIndex].data = [
+              ...updatedSeries[seriesIndex].data,
+              { x: timestamp, y: value }
+            ];
+          } else {
+            // If the series does not exist, create a new one
+            updatedSeries.push({
+              name,
+              data: [{ x: timestamp, y: value }]
+            });
+          }
+        });
+
         return {
           ...prevState,
-          series: [{
-            data: newSeries
-          }]
+          series: updatedSeries
         };
       });
-
-      lastDate = newSeriesData.x; // Now you can reassign lastDate
-
-    }, 1000);
-
-    return () => clearInterval(intervalId); // Clean up the interval on unmount
-  }, []);
+    }
+  }, [newValues]);
 
   return (
     <div>
       <div id="chart">
-        <ReactApexChart options={state.options} series={state.series} type="line" height={700} />
+        <ReactApexChart options={state.options} series={state.series} type="line" />
       </div>
-      <div id="html-dist"></div>
     </div>
   );
 };
 
-export default ApexChart;
+export default SeriesChart;

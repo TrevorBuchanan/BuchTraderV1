@@ -36,8 +36,7 @@ const getCoinbaseProductStats = async (product) => {
 const makeEngineStep = async (product) => {
     try {
         const body = { product }
-        const response = await axios.post(`/api/engine/step`, body);
-        console.log(response.data);
+        await axios.post(`/api/engine/step`, body);  // Maybe print response message or show in error handling
     } catch (error) {
         console.error('Error making engine step:', error);
     }

@@ -8,7 +8,7 @@ class Engine {
     #sellFraction
 
     // FIXME: Could make series a dequeue of length 'goodForLen' for space efficiency 
-    #series 
+    #series
 
     #price
 
@@ -31,7 +31,7 @@ class Engine {
     constructor() {
         this.#actions = [];
 
-        this.#goodForLen = 3;
+        this.#goodForLen = 2;
 
         this.#sellFraction = 0.5;
         this.#maxLossLimit = 1; // FIXME: Experiment with different values
@@ -56,8 +56,12 @@ class Engine {
 
     step(price) {
         this.#actions = []
+
+        if (this.#price === price) { return }
+
         this.#price = price;
         this.#series.push(price);
+
         if (this.#series.length < this.#goodForLen){ return }
         
         this.#justClosedLong = false;
@@ -143,9 +147,6 @@ class Engine {
             if (this.#isShorting) {
                 this.#actions.push("Hold Short");
             }
-            if (!this.#isLonging && !this.#isShorting) {
-                this.#actions.push("No Action");
-            }
         }
     }
 
@@ -194,8 +195,11 @@ class Engine {
     }
 
     getActions() {
-        console.log(this.#actions);
         return this.#actions;
+    }
+
+    getPrice() {
+        return this.#price;
     }
 }
 
