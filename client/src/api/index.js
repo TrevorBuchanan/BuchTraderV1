@@ -1,7 +1,11 @@
 import {
-    getCoinbaseAssetsList
+    getCoinbaseProductsList,
+    getCoinbaseProductHistory,
+    getCoinbaseProductInfo,
 } from './posts';
 
 export {
-    getCoinbaseAssetsList
+    getCoinbaseProductsList,
+    getCoinbaseProductHistory,
+    getCoinbaseProductInfo
 }
