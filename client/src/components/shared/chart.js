@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
+const LOOK_BACK_AMT = 1000000  // 1,000,000 example range for 1,000 seconds (1000 = 1 sec)
+
 const SeriesChart = ({ newValues }) => {
   const [state, setState] = useState({
     series: [],
@@ -38,7 +40,7 @@ const SeriesChart = ({ newValues }) => {
       },
       xaxis: {
         type: 'datetime',
-        range: 30000, // example range for 10 seconds
+        range: LOOK_BACK_AMT, 
       },
       legend: {
         show: true

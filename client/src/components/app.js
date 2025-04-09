@@ -10,7 +10,7 @@ import {
 } from '../api'
 
 const TARGET_PRODUCT = 'BTC-USD';
-const UPDATE_TIME = 1; // In seconds
+const UPDATE_TIME = 60; // In seconds
 
 function App() {
   const [data, setData] = useState([]);
