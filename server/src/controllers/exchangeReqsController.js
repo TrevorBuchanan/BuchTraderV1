@@ -42,19 +42,19 @@ const getProductHistory = async (req, res) => {
     }
 };
 
-const getProductInfo = async (req, res) => {
+const getProductStats = async (req, res) => {
     try {
         const { product } = req.query;
-        const productInfo = await exchangeReqsService.getProductInfo(product);
-        res.json(productInfo);
+        const productStats = await exchangeReqsService.getProductStats(product);
+        res.json(productStats);
     } catch (error) {
         console.error({ message: 'Error (controller) fetching product history', error: error.message })
-        res.status(500).json({ message: 'Error (controller) fetching product info', error: error.message });
+        res.status(500).json({ message: 'Error (controller) fetching product stats', error: error.message });
     }
 };
 
 module.exports = {
     getProductsList,
     getProductHistory,
-    getProductInfo
+    getProductStats
 }

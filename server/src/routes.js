@@ -6,7 +6,7 @@ const engineController = require('./controllers/engineController')
 // Coinbase API routes
 router.get('/coinbase/products-list', exchangeReqsController.getProductsList);
 router.get('/coinbase/product-history', exchangeReqsController.getProductHistory);
-router.get('/coinbase/product-info', exchangeReqsController.getProductInfo);
+router.get('/coinbase/product-stats', exchangeReqsController.getProductStats);
 
 // Engine API roues
 router.post('/engine/step', engineController.makeStep);

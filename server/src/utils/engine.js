@@ -58,7 +58,7 @@ class Engine {
         this.#actions = []
         this.#price = price;
         this.#series.push(price);
-        if (this.#series < this.#goodForLen){ return }
+        if (this.#series.length < this.#goodForLen){ return }
         
         this.#justClosedLong = false;
         this.#justClosedShort = false;
@@ -100,29 +100,29 @@ class Engine {
     }
 
     #checkLong() {
-        if (this.#shouldLong(series)) {
+        if (this.#shouldLong()) {
             this.#longEntryPrice = this.#price;
             this.#isLonging = true;
-            this.#longLossLimit = price - this.#maxLossLimit
-            actions.push("Long");
+            this.#longLossLimit = this.#price - this.#maxLossLimit
+            this.#actions.push("Long");
         }
     }
 
     #checkCloseLong() {
-        if (this.#shouldCloseLong(price)) {
+        if (this.#shouldCloseLong()) {
             this.#justClosedLong = true;
             this.#profitLoss += this.#price - this.#longEntryPrice;
             this.#isLonging = false;
-            actions.push("Close Long");
+            this.#actions.push("Close Long");
         }
     }
 
     #checkShort() {
-        if (this.#shouldShort(series)) {
+        if (this.#shouldShort()) {
             this.#shortEntryPrice = this.#price;
             this.#isShorting = true;
-            this.#shortLossLimit = price + this.#maxLossLimit
-            actions.push("Short");
+            this.#shortLossLimit = this.#price + this.#maxLossLimit
+            this.#actions.push("Short");
         }
     }
 
@@ -131,20 +131,20 @@ class Engine {
             this.#justClosedShort = true;
             this.#profitLoss += this.#shortEntryPrice - this.#price;
             this.#isShorting = false;
-            actions.push("Close Short");
+            this.#actions.push("Close Short");
         }
     }
 
     #checkHold() {
-        if (actions.length === 0) {
+        if (this.#actions.length === 0) {
             if (this.#isLonging) {
-                actions.push("Hold Long");
+                this.#actions.push("Hold Long");
             }
             if (this.#isShorting) {
-                actions.push("Hold Short");
+                this.#actions.push("Hold Short");
             }
             if (!this.#isLonging && !this.#isShorting) {
-                actions.push("No Action");
+                this.#actions.push("No Action");
             }
         }
     }
@@ -194,6 +194,7 @@ class Engine {
     }
 
     getActions() {
+        console.log(this.#actions);
         return this.#actions;
     }
 }

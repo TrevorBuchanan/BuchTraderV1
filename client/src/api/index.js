@@ -1,7 +1,7 @@
 import {
     getCoinbaseProductsList,
     getCoinbaseProductHistory,
-    getCoinbaseProductInfo,
+    getCoinbaseProductStats,
     makeEngineStep,
     getEngineStatus,
 } from './posts';
@@ -9,7 +9,7 @@ import {
 export {
     getCoinbaseProductsList,
     getCoinbaseProductHistory,
-    getCoinbaseProductInfo,
+    getCoinbaseProductStats,
     makeEngineStep,
     getEngineStatus
 }

@@ -23,21 +23,21 @@ const getCoinbaseProductHistory = async (product, numTimePoints, granularity) =>
     }
 };
 
-const getCoinbaseProductInfo = async (product) => {
+const getCoinbaseProductStats = async (product) => {
     try {
         const params = { 'product': product }
-        const response = await axios.get(`/api/coinbase/product-info`, { params });
+        const response = await axios.get(`/api/coinbase/product-stats`, { params });
         return response.data;
     } catch (error) {
-        console.error('Error fetching product info:', error);
+        console.error('Error fetching product stats:', error);
     }
 };
 
 const makeEngineStep = async (product) => {
     try {
-        const params = { 'product': product }
-        const response = await axios.post(`/api/engine/step`, { params });
-        return response.data;
+        const body = { product }
+        const response = await axios.post(`/api/engine/step`, body);
+        console.log(response.data);
     } catch (error) {
         console.error('Error making engine step:', error);
     }
@@ -55,7 +55,7 @@ const getEngineStatus = async () => {
 export {
     getCoinbaseProductsList,
     getCoinbaseProductHistory,
-    getCoinbaseProductInfo,
+    getCoinbaseProductStats,
     makeEngineStep,
     getEngineStatus,
 }

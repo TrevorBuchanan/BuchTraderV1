@@ -3,11 +3,11 @@ const exchangeReqsService = require('../services/exchangeReqsService');
 
 const makeStep = async (req, res) => {
     try {
-        const { product } = req.query;
-        const productInfo = await exchangeReqsService.getProductInfo(product);
-        const price = productInfo.price;
-
+        const { product } = req.body;
+        const productStats = await exchangeReqsService.getProductStats(product);
+        const price = productStats.last;
         await engineService.makeStep(price);
+        res.status(200).json({ message: "Backend step successfully completed" });
     } catch (error) {
         console.error({ message: 'Error (controller) making step', error: error.message })
     }

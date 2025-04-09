@@ -24,12 +24,12 @@ const getProductHistory = async (product, startTime, endTime, granularity) => {
     }
 };
 
-const getProductInfo = async (product) => {
+const getProductStats = async (product) => {
     try {
-        const response = await exchangeReqs.makeExchangeRequest('GET', `/products/${product}`);
+        const response = await exchangeReqs.makeExchangeRequest('GET', `/products/${product}/stats`);
         return response.data || response;
     } catch (error) {
-        throw new Error(`Error (service) fetching product info: ${error.message}`);
+        throw new Error(`Error (service) fetching product stats: ${error.message}`);
     }
 };
 
@@ -37,5 +37,5 @@ const getProductInfo = async (product) => {
 module.exports = {
     getProductsList,
     getProductHistory,
-    getProductInfo
+    getProductStats
 };

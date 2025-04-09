@@ -1,8 +1,10 @@
-const engine = require('../utils/engine');
+
+const Engine = require('../utils/engine');
+const engine = new Engine();
 
 const makeStep = async (price) => {
     try {
-        engine.step(price);
+        await engine.step(price);
     } catch (error) {
         throw new Error(`Error (service) making engine step: ${error.message}`);
     }
