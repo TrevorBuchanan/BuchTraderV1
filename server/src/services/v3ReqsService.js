@@ -1,9 +1,8 @@
 const v3Reqs = require('../configs/v3Reqs');
 
-const getProduct = async (product) => {
+const getProductInfo = async (product) => {
     try {
-        // const response = await v3Reqs.makeRequest('GET', `/products/${product}`); 
-        const response = await v3Reqs.makeRequest('GET', `/products`); 
+        const response = await v3Reqs.makeRequest('GET', `/products/${product}`); 
         return response.data || response; 
     } catch (error) {
         throw new Error(`Error (service) fetching product ${product}: ${error.message}`);
@@ -11,5 +10,5 @@ const getProduct = async (product) => {
 };
 
 module.exports = {
-    getProduct,
+    getProductInfo,
 };

@@ -1,11 +1,11 @@
 const engineService = require('../services/engineService');
-const exchangeReqsService = require('../services/exchangeReqsService');
+const v3ReqsService = require('../services/v3ReqsService');
 
 const makeStep = async (req, res) => {
     try {
         const { product } = req.body;
-        const productStats = await exchangeReqsService.getProductStats(product);
-        const price = productStats.last;
+        const productInfo = await v3ReqsService.getProductInfo(product);
+        const price = productInfo.price;
         await engineService.makeStep(price);
         res.status(200).json({ message: "Backend step successfully completed" });
     } catch (error) {

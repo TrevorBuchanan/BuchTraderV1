@@ -2,10 +2,6 @@ const { sign } = require("jsonwebtoken");
 const crypto = require("crypto");
 
 const makeJWTtoken = (key_name, key_secret, uri) => {
-    console.log(key_name);
-    console.log(key_secret);
-    console.log(uri);
-    
     const algorithm = "ES256";
     const token = sign(
         {

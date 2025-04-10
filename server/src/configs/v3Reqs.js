@@ -47,10 +47,6 @@ const makeRequest = async (method, requestPath, params = {}, data = {}, timeout 
   const url = `https://${BASE_URL}${requestPath}`;
   const headers = makeHeaders(`${method} ${BASE_URL}${requestPath}`);
 
-  console.log("Request URL:", url);
-  console.log("Headers:", headers);
-  console.log("Request body:", JSON.stringify(data));
-
   try {
     const response = await axios({
       method,
