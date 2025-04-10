@@ -34,7 +34,7 @@ class Engine {
         this.#goodForLen = 2;
 
         this.#sellFraction = 0.5;
-        this.#maxLossLimit = 1; // FIXME: Experiment with different values
+        this.#maxLossLimit = 10; // FIXME: Experiment with different values
 
         this.#series = [];
         this.#price = null;
@@ -47,23 +47,30 @@ class Engine {
 
         this.#profitLoss = 0;
 
-        this.#longEntryPrice = 0;
-        this.#shortEntryPrice = 0;
+        this.#longEntryPrice = null;
+        this.#shortEntryPrice = null;
 
-        this.#longLossLimit = 0;
-        this.#shortLossLimit = 0;
+        this.#longLossLimit = null;
+        this.#shortLossLimit = null;
     }
 
     step(price) {
+        const convertedPrice = Number(price);
+
+        // Check if the conversion was successful (if it results in NaN)
+        if (isNaN(convertedPrice)) {
+            throw new Error(`Invalid price passed to step: ${price}`);
+        }
+
         this.#actions = []
 
-        if (this.#price === price) { return }
+        if (this.#price === convertedPrice) { return }
 
-        this.#price = price;
-        this.#series.push(price);
+        this.#price = convertedPrice;
+        this.#series.push(convertedPrice);
 
-        if (this.#series.length < this.#goodForLen){ return }
-        
+        if (this.#series.length < this.#goodForLen) { return }
+
         this.#justClosedLong = false;
         this.#justClosedShort = false;
 
@@ -96,10 +103,41 @@ class Engine {
 
     #updateLimits() {
         if (this.#isLonging) {
-            this.#longLossLimit = Utils.lerp(this.#longLossLimit, this.#price, this.#sellFraction)
+            if (this.#longLossLimit !== null) {
+                const longLossLimitType = typeof this.#longLossLimit;
+                const priceType = typeof this.#price;
+                const sellFractionType = typeof this.#sellFraction;
+
+                if (longLossLimitType !== "number" || priceType !== "number" || sellFractionType !== "number") {
+                    throw new Error(`Invalid input types for lerp in updateLimits: 
+                    longLossLimit (${longLossLimitType}): ${this.#longLossLimit}, 
+                    price (${priceType}): ${this.#price}, 
+                    sellFraction (${sellFractionType}): ${this.#sellFraction}`);
+                }
+
+                this.#longLossLimit = Utils.lerp(this.#longLossLimit, this.#price, this.#sellFraction);
+            } else {
+                throw new Error("longLossLimit is null when trying to update limits");
+            }
         }
+
         if (this.#isShorting) {
-            this.#shortLossLimit = Utils.lerp(this.#shortLossLimit, this.#price, this.#sellFraction)
+            if (this.#shortLossLimit !== null) {
+                const shortLossLimitType = typeof this.#shortLossLimit;
+                const priceType = typeof this.#price;
+                const sellFractionType = typeof this.#sellFraction;
+
+                if (shortLossLimitType !== "number" || priceType !== "number" || sellFractionType !== "number") {
+                    throw new Error(`Invalid input types for lerp in updateLimits: 
+                    shortLossLimit (${shortLossLimitType}): ${this.#shortLossLimit}, 
+                    price (${priceType}): ${this.#price}, 
+                    sellFraction (${sellFractionType}): ${this.#sellFraction}`);
+                }
+
+                this.#shortLossLimit = Utils.lerp(this.#shortLossLimit, this.#price, this.#sellFraction);
+            } else {
+                throw new Error("shortLossLimit is null when trying to update limits");
+            }
         }
     }
 
@@ -176,6 +214,7 @@ class Engine {
         if (this.#isLonging) {
             return this.#longLossLimit;
         }
+        this.#longLossLimit = null;
         return null;
     }
 
@@ -187,6 +226,7 @@ class Engine {
         if (this.#isShorting) {
             return this.#shortLossLimit;
         }
+        this.#shortLossLimit = null;
         return null;
     }
 

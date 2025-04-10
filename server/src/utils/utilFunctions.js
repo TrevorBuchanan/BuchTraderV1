@@ -1,5 +1,8 @@
 
 function lerp(a, b, t) {
+    if (typeof a !== "number" || typeof b !== "number" || typeof t !== "number") {
+        throw new Error(`Inputs to lerp must be numbers for a: ${a}, b: ${b}, t: ${t}`);
+    }
     return a + t * (b - a)
 }
 

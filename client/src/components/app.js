@@ -11,7 +11,7 @@ import {
 } from '../api'
 
 const TARGET_PRODUCT = 'BTC-USD';
-const UPDATE_TIME = 2; // In seconds
+const UPDATE_TIME = 30; // In seconds
 
 function App() {
   const [data, setData] = useState([]);
@@ -31,8 +31,18 @@ function App() {
         const longLossLimit = engineData.longLossLimit;
         const shortLossLimit = engineData.shortLossLimit;
         const actions = engineData.actions;
+
+        // console.log("Price");
+        // console.log(price);
+        console.log("Actions");
         console.log(actions);
+        console.log("Profit loss");
         console.log(profitLoss);
+        // console.log("Long loss limit");
+        // console.log(longLossLimit);
+        // console.log("Short loss limit");
+        // console.log(shortLossLimit);
+
 
         // Update the data for the chart
         setData([
