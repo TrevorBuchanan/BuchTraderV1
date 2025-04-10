@@ -33,6 +33,16 @@ const getCoinbaseProductStats = async (product) => {
     }
 };
 
+const getCoinbaseProductInfo = async (product) => {
+    try {
+        const params = { 'product': product }
+        const response = await axios.get(`/api/coinbase/product-info`, { params });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching product info:', error);
+    }
+};
+
 const makeEngineStep = async (product) => {
     try {
         const body = { product }
@@ -55,6 +65,7 @@ export {
     getCoinbaseProductsList,
     getCoinbaseProductHistory,
     getCoinbaseProductStats,
+    getCoinbaseProductInfo,
     makeEngineStep,
     getEngineStatus,
 }
